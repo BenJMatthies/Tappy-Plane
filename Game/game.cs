@@ -9,6 +9,7 @@ public partial class game : Node2D
     Marker2D SpawnUpper;
     Marker2D SpawnLower;
     Timer SpawnTimer;
+    GameManager gameManager;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -19,6 +20,9 @@ public partial class game : Node2D
         SpawnUpper = GetNode<Marker2D>("SpawnUpper");
         SpawnLower = GetNode<Marker2D>("SpawnLower");
         SpawnTimer = GetNode<Timer>("SpawnTimer");
+        gameManager = (GameManager)GetNode("/root/GameManager");
+
+        gameManager.Connect("OnGameOver", OnPlaneDied());
 
         SpawnPipes();
     }
@@ -28,16 +32,21 @@ public partial class game : Node2D
     {
     }
 
-    private void OnSpawnTimerTimeout()
-    {
-        SpawnPipes();
-    }
-
     private void SpawnPipes()
     {
         double yPosition = GD.RandRange(SpawnUpper.Position.Y, SpawnLower.Position.Y);
         Node2D newPipes = (Node2D)PipesScene.Instantiate();
         newPipes.Position = new Vector2(SpawnLower.Position.X, (float)yPosition);
         PipesHolder.AddChild(newPipes);
+    }
+
+    private void OnSpawnTimerTimeout()
+    {
+        SpawnPipes();
+    }
+
+    private void OnPlaneDied()
+    {
+        gameManager.loadMainScene();
     }
 }

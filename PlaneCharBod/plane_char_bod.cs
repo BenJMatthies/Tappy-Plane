@@ -3,15 +3,20 @@ using System;
 
 public partial class plane_char_bod : CharacterBody2D
 {
-    const double GRAVITY = 20;
-    const double POWER = -425.0;
+    const double GRAVITY = 17;
+    const double POWER = -300.0;
     AnimationPlayer _player;
-	AnimatedSprite2D _planeSprite;
+    AnimatedSprite2D _planeSprite;
+
+    // [Signal]
+    // public delegate void OnPlaneDiedEventHandler();
+    GameManager gameManager;
 
     public override void _Ready()
     {
         _player = GetNode<AnimationPlayer>("AnimationPlayer");
-		_planeSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        _planeSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        gameManager = (GameManager)GetNode("/root/GameManager");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -20,10 +25,10 @@ public partial class plane_char_bod : CharacterBody2D
         Fly();
         MoveAndSlide();
 
-		if(IsOnFloor())
-		{
-			Die();
-		}
+        if (IsOnFloor())
+        {
+            Die();
+        }
     }
 
     private void Fall()
@@ -40,9 +45,12 @@ public partial class plane_char_bod : CharacterBody2D
         }
     }
 
-	private void Die()
-	{
-		_planeSprite.Stop();
-		SetPhysicsProcess(false);
-	}
+    private void Die()
+    {
+        _planeSprite.Stop();
+        // EmitSignal("OnPlaneDied");
+        // GameManager gameManager = (GameManager)GetNode("/root/GameManager");
+        gameManager.EmitSignal("OnGameOver");
+        SetPhysicsProcess(false);
+    }
 }

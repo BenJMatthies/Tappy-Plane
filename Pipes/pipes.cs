@@ -3,7 +3,7 @@ using System;
 
 public partial class pipes : Node2D
 {
-    const double SCROLL_SPEED = 50.0;
+    const double SCROLL_SPEED = 120.0;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
