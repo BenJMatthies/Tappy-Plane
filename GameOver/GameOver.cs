@@ -7,6 +7,7 @@ public partial class GameOver : Control
     Label PressSpaceLabel;
     Timer LabelTimer;
     bool pressSpaceEnabled;
+	GameManager gameManager;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -15,8 +16,10 @@ public partial class GameOver : Control
         PressSpaceLabel = GetNode<Label>("PressSpaceLabel");
         LabelTimer = GetNode<Timer>("Timer");
         pressSpaceEnabled = false;
+		gameManager = GetNode<GameManager>("/root/GameManager");
 
-        endGame();
+		Callable onGameOverCallable = new(this, "OnGameOver");
+        gameManager.Connect("OnGameOver", onGameOverCallable);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -26,19 +29,18 @@ public partial class GameOver : Control
         {
             if (Input.IsActionJustPressed("fly"))
             {
-                GameManager gameManager = (GameManager)GetNode("/root/GameManager");
                 gameManager.loadMainScene();
             }
         }
     }
 
-    private void endGame()
+    private void OnGameOver()
     {
         Show();
         LabelTimer.Start();
     }
 
-    private void switchVisibleLabels(bool labelSwitch)
+    private void SwitchVisibleLabels(bool labelSwitch)
     {
         GameOverLabel.Visible = labelSwitch;
         PressSpaceLabel.Visible = !labelSwitch;
@@ -47,6 +49,6 @@ public partial class GameOver : Control
 
     private void OnTimerTimeout()
     {
-        switchVisibleLabels(false);
+        SwitchVisibleLabels(false);
     }
 }

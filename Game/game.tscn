@@ -42,5 +42,4 @@ autostart = true
 [node name="GameOver" parent="CanvasLayer" instance=ExtResource("4_5s1au")]
 visible = false
 
-[connection signal="OnPlaneDied" from="PlaneCharBod" to="." method="OnPlaneDied"]
 [connection signal="timeout" from="SpawnTimer" to="." method="OnSpawnTimerTimeout"]

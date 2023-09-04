@@ -20,9 +20,10 @@ public partial class game : Node2D
         SpawnUpper = GetNode<Marker2D>("SpawnUpper");
         SpawnLower = GetNode<Marker2D>("SpawnLower");
         SpawnTimer = GetNode<Timer>("SpawnTimer");
-        gameManager = (GameManager)GetNode("/root/GameManager");
+        gameManager = GetNode<GameManager>("/root/GameManager");
 
-        gameManager.Connect("OnGameOver", OnPlaneDied());
+        Callable onGameOverCallable = new(this, "OnGameOver");
+        gameManager.Connect("OnGameOver", onGameOverCallable);
 
         SpawnPipes();
     }
@@ -45,8 +46,8 @@ public partial class game : Node2D
         SpawnPipes();
     }
 
-    private void OnPlaneDied()
+    private void OnGameOver()
     {
-        gameManager.loadMainScene();
+
     }
 }

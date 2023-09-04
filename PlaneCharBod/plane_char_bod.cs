@@ -8,15 +8,14 @@ public partial class plane_char_bod : CharacterBody2D
     AnimationPlayer _player;
     AnimatedSprite2D _planeSprite;
 
-    // [Signal]
-    // public delegate void OnPlaneDiedEventHandler();
+    // [Signal] public delegate void OnPlaneDiedEventHandler();
     GameManager gameManager;
 
     public override void _Ready()
     {
         _player = GetNode<AnimationPlayer>("AnimationPlayer");
         _planeSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-        gameManager = (GameManager)GetNode("/root/GameManager");
+        gameManager = GetNode<GameManager>("/root/GameManager");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -25,10 +24,7 @@ public partial class plane_char_bod : CharacterBody2D
         Fly();
         MoveAndSlide();
 
-        if (IsOnFloor())
-        {
-            Die();
-        }
+        if (IsOnFloor()) Die();
     }
 
     private void Fall()
@@ -49,8 +45,7 @@ public partial class plane_char_bod : CharacterBody2D
     {
         _planeSprite.Stop();
         // EmitSignal("OnPlaneDied");
-        // GameManager gameManager = (GameManager)GetNode("/root/GameManager");
-        gameManager.EmitSignal("OnGameOver");
         SetPhysicsProcess(false);
+        gameManager.EmitSignal("OnGameOver");
     }
 }
