@@ -5,6 +5,7 @@ public partial class plane_char_bod : CharacterBody2D
 {
     const double GRAVITY = 17;
     const double POWER = -300.0;
+    public bool dead = false;
     AnimationPlayer _player;
     AnimatedSprite2D _planeSprite;
 
@@ -24,7 +25,10 @@ public partial class plane_char_bod : CharacterBody2D
         Fly();
         MoveAndSlide();
 
-        if (IsOnFloor()) Die();
+        if (IsOnFloor()) 
+        {
+            Die();
+        }
     }
 
     private void Fall()
@@ -41,11 +45,15 @@ public partial class plane_char_bod : CharacterBody2D
         }
     }
 
-    private void Die()
+    public void Die()
     {
-        _planeSprite.Stop();
-        // EmitSignal("OnPlaneDied");
-        SetPhysicsProcess(false);
-        gameManager.EmitSignal("OnGameOver");
+        if(!dead)
+        {
+            dead = true;
+            _planeSprite.Stop();
+            // EmitSignal("OnPlaneDied");
+            SetPhysicsProcess(false);
+            gameManager.EmitSignal("OnGameOver");
+        }
     }
 }

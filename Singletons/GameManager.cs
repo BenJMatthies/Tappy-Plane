@@ -4,6 +4,33 @@ using System;
 public partial class GameManager : Node
 {
     [Signal] public delegate void OnGameOverEventHandler();
+    [Signal] public delegate void OnScoreUpdatedEventHandler();
+
+    private int _score = 0;
+    private int _highScore = 0;
+
+    public int getScore()
+    {
+        return _score;
+    }
+
+    public int getHighScore()
+    {
+        return _highScore;
+    }
+
+    public void setScore(int value)
+    {
+        _score = value;
+        if (_score > _highScore) _highScore = _score;
+        EmitSignal("OnScoreUpdated");
+        GD.Print($"Score: {_score} High Score: {_highScore}");
+    }
+
+    public void incrementScore()
+    {
+        setScore(_score + 1);
+    }
 
     public void loadGameScene()
     {
