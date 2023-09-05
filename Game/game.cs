@@ -34,11 +34,6 @@ public partial class game : Node2D
         SpawnPipes();
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-    {
-    }
-
     private void SpawnPipes()
     {
         double yPosition = GD.RandRange(SpawnUpper.Position.Y, SpawnLower.Position.Y);

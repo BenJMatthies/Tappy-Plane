@@ -33,7 +33,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tdu3b"]
-radius = 38.1809
+radius = 30.6667
 
 [sub_resource type="Animation" id="Animation_5riwb"]
 resource_name = "fly"
@@ -67,6 +67,7 @@ autoplay = "fly"
 frame_progress = 0.798589
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(6.66667, 0)
 shape = SubResource("CircleShape2D_tdu3b")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

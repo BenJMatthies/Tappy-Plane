@@ -24,7 +24,6 @@ public partial class GameManager : Node
         _score = value;
         if (_score > _highScore) _highScore = _score;
         EmitSignal("OnScoreUpdated");
-        GD.Print($"Score: {_score} High Score: {_highScore}");
     }
 
     public void incrementScore()

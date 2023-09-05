@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://d1e4dj87jdp23"]
+[gd_scene load_steps=10 format=3 uid="uid://d1e4dj87jdp23"]
 
 [ext_resource type="Texture2D" uid="uid://cuasglcx1rlj3" path="res://assets/background/rocks_2.png" id="1_j6rx4"]
 [ext_resource type="Script" path="res://Game/game.cs" id="1_kbajl"]
+[ext_resource type="PackedScene" uid="uid://dydu3gu4ic33x" path="res://ScrollingBackground/ScrollingBackground.tscn" id="2_5hir7"]
 [ext_resource type="PackedScene" uid="uid://ct8l4kfapmqad" path="res://PlaneCharBod/plane_char_bod.tscn" id="2_yqh0b"]
 [ext_resource type="PackedScene" uid="uid://2g7qjqm4o5k8" path="res://GameOver/GameOver.tscn" id="4_5s1au"]
 [ext_resource type="AudioStream" uid="uid://yxtvq3jwr4j6" path="res://assets/audio/engine.mp3" id="5_l6gyy"]
@@ -14,15 +15,21 @@ size = Vector2(504, 20)
 [node name="Game" type="Node2D"]
 script = ExtResource("1_kbajl")
 
+[node name="ScrollingBackground" parent="." instance=ExtResource("2_5hir7")]
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(255, 317)
 texture = ExtResource("1_j6rx4")
 
 [node name="PlaneCharBod" parent="." instance=ExtResource("2_yqh0b")]
 position = Vector2(53, 417)
+collision_mask = 8
 
 [node name="Ground" type="StaticBody2D" parent="."]
 position = Vector2(0, 857)
+collision_layer = 8
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
 position = Vector2(242, 0)
